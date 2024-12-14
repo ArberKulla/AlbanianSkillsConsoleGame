@@ -4,11 +4,11 @@ import enums.PromptType;
 import interfaces.GameStateAction;
 
 public class DialogEntities {
-    static MainMenu menu = MainMenu.getInstance();
-    static GameSession session = GameSession.getInstance();
+     static MainMenu menu = MainMenu.getInstance();
+     static GameSession session = GameSession.getInstance();
 
     //START GAME
-    public static final DialogEntity GAME_START = new DialogEntity(
+    public static DialogEntity GAME_START = new DialogEntity(
             "Game",
             new Prompt[]{
             new Prompt(
@@ -29,12 +29,16 @@ public class DialogEntities {
             ),
     },
             ()->{
-                //
+                session.map = new GameMap();
+                session.player.x= session.map.currentLevel.grid.length/2;
+                session.player.y= session.map.currentLevel.grid.length/2;
+                session.gameState= GameState.OPEN_WORLD;
+                menu.processText("");
             }
     );
 
     // NEW GAME
-    public static final DialogEntity NEW_GAME = new DialogEntity(
+    public static DialogEntity NEW_GAME = new DialogEntity(
             "Nugua"
             ,new Prompt[]{
             new Prompt(
@@ -42,10 +46,11 @@ public class DialogEntities {
                     PromptType.REACTION,
                     (text) -> {
                         session.player.name=text;
+                        menu.textArea.append("\nNagua: "+session.player.name+"... a wonderful name.... ");
                     }
             ),
             new Prompt(
-                    "What a wonderful name.... what path will you choose my child?\n1. Warrior\n2. Mage\n3. Range",
+                    "What path will you choose my child?\n1. Warrior\n2. Mage\n3. Range",
                     PromptType.REACTION,
                     (text) -> {
                         switch(text.toUpperCase()){
@@ -92,15 +97,14 @@ public class DialogEntities {
         }
 
         public void next(String text){
-            System.out.println(session.name);
+            if(currentIndex>0) {
+                if (prompts[currentIndex-1].type == PromptType.REACTION) {
+                    prompts[currentIndex-1].action.execute(text);
+                }
+            }
+
                 if(currentIndex<prompts.length) {
                     menu.textArea.append("\n"+name +": "+ prompts[currentIndex].text);
-                }
-
-                if(currentIndex>0) {
-                    if (prompts[currentIndex-1].type == PromptType.REACTION) {
-                        prompts[currentIndex-1].action.execute(text);
-                    }
                 }
 
                 if(currentIndex==prompts.length) {

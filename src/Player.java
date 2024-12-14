@@ -5,9 +5,11 @@ public class Player {
     GameClass gameClass;
     Stats stats;
     Inventory inventory;
+    int x;
+    int y;
 
     public Player(){
-        this.name = "Warrior";
+        this.name = "Arber";
         this.gameClass = GameClass.WARRIOR;
     }
 

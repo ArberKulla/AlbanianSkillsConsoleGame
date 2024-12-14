@@ -2,6 +2,7 @@ import enums.GameState;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Map;
 
 public class GameSession {
     private static GameSession instance;
@@ -10,11 +11,12 @@ public class GameSession {
     String name;
     Player player;
     GameState gameState;
+    GameMap map;
 
 
     private GameSession(){
         this.player = new Player();
-        this.name="Game :";
+        this.name="Game: ";
         this.gameState = GameState.MAIN_MENU;
     }
 
