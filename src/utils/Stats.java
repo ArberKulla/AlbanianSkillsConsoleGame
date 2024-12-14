@@ -1,3 +1,5 @@
+package utils;
+
 public class Stats {
     private int hp;
     private int mana;
@@ -69,12 +71,11 @@ public class Stats {
 
     @Override
     public String toString() {
-        return "Stats{" +
+        return "\n" +
                 "HP=" + hp +
                 ", Mana=" + mana +
                 ", Strength=" + strength +
                 ", Defense=" + defense +
-                ", Speed=" + speed +
-                '}';
+                ", Speed=" + speed;
     }
 }

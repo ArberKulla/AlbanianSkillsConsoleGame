@@ -1,16 +1,21 @@
+package utils;
+
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Random;
 
 
 public class GameLevel {
-    String[] locations = {"You have entered the Forest; it seems rather calm!", "You have entered the Cave; the darkness feels oppressive.", "You have entered the Desert; the heat is almost unbearable.", "You have entered the Mountain; the air is thin and crisp.", "You have entered the Swamp; the smell is nauseating and the ground squelches beneath your feet.", "You have entered the Ruins; ancient walls whisper tales of a forgotten past.", "You have entered the Volcano; molten lava bubbles menacingly around you.", "You have entered the Tavern; the smell of ale and laughter fills the air.", "You have entered the Enchanted Grove; the trees seem to hum with a magical melody.", "You have entered the Frozen Wastes; icy winds bite at your skin."};
+    Location[] locations = {new Location("You have entered the Forest; it seems rather calm!", Color.GREEN), new Location("You have entered the Cave; the darkness feels oppressive.", Color.DARK_GRAY), new Location("You have entered the Desert; the heat is almost unbearable.", Color.YELLOW), new Location("You have entered the Mountain; the air is thin and crisp.", Color.CYAN), new Location("You have entered the Swamp; the smell is nauseating and the ground squelches beneath your feet.", new Color(1, 50, 32)), new Location("You have entered the Ruins; ancient walls whisper tales of a forgotten past.", Color.GRAY), new Location("You have entered the Volcano; molten lava bubbles menacingly around you.", Color.RED), new Location("You have entered the Tavern; the smell of ale and laughter fills the air.", Color.ORANGE), new Location("You have entered the Enchanted Grove; the trees seem to hum with a magical melody.", new Color(128, 0, 128)), new Location("You have entered the Frozen Wastes; icy winds bite at your skin.", Color.WHITE)};
 
-    String flavor;
-    char[][] grid;
-    GameLevel upLevel;
-    GameLevel downLevel;
-    GameLevel leftLevel;
-    GameLevel rightLevel;
+
+    public String flavor;
+    public char[][] grid;
+    public Color color;
+    public GameLevel upLevel;
+    public GameLevel downLevel;
+    public GameLevel leftLevel;
+    public GameLevel rightLevel;
 
     public GameLevel(){
         generateMap();
@@ -19,7 +24,9 @@ public class GameLevel {
 
     public void generateMap(){
         Random rand = new Random();
-        flavor = locations[rand.nextInt(locations.length)];
+        int locationRNG = rand.nextInt(locations.length);
+        flavor = locations[locationRNG].getDescription();
+        color = locations[locationRNG].getColor();
         int randSize = (int) (Math.random() * 5);  // Generates a random number between 0 and 4
         int size = (randSize * 2) + 7;
         int npcAmmount = (int) (Math.random() * randSize);

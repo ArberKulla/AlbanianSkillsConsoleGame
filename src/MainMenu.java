@@ -28,7 +28,7 @@ public class MainMenu {
         panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 60, 20));
         panel.setPreferredSize(new Dimension(300,300));
-        panel.setBackground(Color.GREEN);
+        panel.setBackground(Color.BLACK);
         frame.add(panel, BorderLayout.NORTH);
         // Create a text area for displaying text
         textArea = new JTextArea(session.name + "Welcome to the fantasitcal World of Tajran!\nPlease select an action:\n1. New Game\n2. Continue\n3. Multiplayer");
@@ -49,23 +49,6 @@ public class MainMenu {
         textField.addActionListener(e -> {
             processText(textField.getText());
         });
-
-        // Set up a key binding for the Enter key
-        InputMap inputMap = textField.getInputMap(JComponent.WHEN_FOCUSED);
-        ActionMap actionMap = textField.getActionMap();
-
-        // Binding Keys
-        if (session.gameState == GameState.OPEN_WORLD) {
-            for (int key : new int[]{KeyEvent.VK_W, KeyEvent.VK_A, KeyEvent.VK_S, KeyEvent.VK_D}) {
-                inputMap.put(KeyStroke.getKeyStroke(key, 0), "keyPressed_" + key);
-                actionMap.put("keyPressed_" + key, new AbstractAction() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        //moveAction(key); // Send the key code to the method
-                    }
-                });
-            }
-        }
 
             // Make the frame visible
             frame.setVisible(true);
@@ -91,16 +74,49 @@ public class MainMenu {
                 case("MULTIPLAYER"):
                 case("3"):
                     //Load Save Logic
-                    textArea.setText("Work in progress!");
+                    textArea.append("\nWork in progress!");
                     break;
             }
             break;
+
+
             case DIALOG:
                 DialogEntities.DialogEntity dialog = session.currentDialog;
                 dialog.next(text);
                 break;
+
+
             case OPEN_WORLD:
-                session.map.printMap();
+                switch (text.toUpperCase()) {
+                    case ("87"):
+                    case ("W"):
+                        session.map.movePlayer(session.player.x-1,session.player.y);
+                        break;
+                    case ("65"):
+                    case ("A"):
+                        session.map.movePlayer(session.player.x,session.player.y-1);
+                        break;
+                    case ("83"):
+                    case ("S"):
+                        session.map.movePlayer(session.player.x+1,session.player.y);
+                        break;
+                    case ("68"):
+                    case ("D"):
+                        session.map.movePlayer(session.player.x,session.player.y+1);
+                        break;
+                    case ("HELP"):
+                        textArea.append("\nGame: You should walk around, collect loot, and kill monsters!\n" +
+                                "Helpful Prompts:\n" +
+                                "Stats -> Shows your current stats!\n" +
+                                "Inventory -> Shows your current inventory!\n" +
+                                "Inventory use (number) -> Uses the item in that current inventory slot!");
+                        break;
+                    case ("STATS"):
+                        textArea.append("\n"+session.player.showStats());
+                        break;
+                    default:
+                        session.map.printMap();
+                }
                 break;
             case BATTLE:
                 break;

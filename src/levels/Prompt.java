@@ -1,10 +1,12 @@
+package levels;
+
 import enums.PromptType;
 import interfaces.PromptAction;
 
 public class Prompt {
-    PromptType type;
-    String text;
-    PromptAction action;
+    public PromptType type;
+    public String text;
+    public PromptAction action;
 
     public Prompt(String text, PromptType type, PromptAction action){
         this.action=action;

@@ -2,6 +2,7 @@ import enums.GameClass;
 import enums.GameState;
 import enums.PromptType;
 import interfaces.GameStateAction;
+import levels.Prompt;
 
 public class DialogEntities {
      static MainMenu menu = MainMenu.getInstance();
@@ -34,6 +35,7 @@ public class DialogEntities {
                 session.player.y= session.map.currentLevel.grid.length/2;
                 session.gameState= GameState.OPEN_WORLD;
                 menu.processText("");
+                session.map.enterMap();
             }
     );
 
