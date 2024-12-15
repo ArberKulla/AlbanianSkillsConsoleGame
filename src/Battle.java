@@ -10,7 +10,7 @@ public class Battle {
 
     public Battle() {
         enemy = new Enemy(session.player.fightsWon);
-        menu.textArea.append("\n!!! You have been attacked by " + enemy.name);
+        menu.textArea.append("\n!!! You have been attacked by " + enemy.name+"\n"+enemy.showStats());
         if (enemy.stats.getSpeed() > session.player.stats.getSpeed()) {
             enemyTurn();
         }

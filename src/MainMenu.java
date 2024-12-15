@@ -186,14 +186,12 @@ public class MainMenu {
                                 "1. Attack: Attack the enemy normally\n" +
                                 "2. Block: Makes you take half damage next turn and restores mana!!\n" +
                                 "3. Spell: Uses mana for a powerful spell!\n" +
-                                "4. Inventory: Shows your current items!\n" +
-                                "5. Inventory use (number) -> Uses the item in that current inventory slot!\n" +
-                                "Additional Commands: Stats, Stats Enemy");
+                                "4. Inventory: Uses the inventory feature!");
 
                         break;
                 }
 
-                if (text.toUpperCase().contains("INVENTORY")) {
+                if (text.toUpperCase().contains("INVENTORY") || text.toUpperCase().contains("4")) {
                     String[] args = text.split(" ");
                     if (args.length == 1) {
                         textArea.append("\n" + session.player.inventory.toString());
