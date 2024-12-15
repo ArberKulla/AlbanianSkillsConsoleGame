@@ -69,13 +69,15 @@ public class MainMenu {
                 case("CONTINUE"):
                 case("2"):
                     //Load Save Logic
-                    textArea.setText("Last time, on Battlemons!");
+                    textArea.append("Last time, on Battlemons!");
                     break;
                 case("MULTIPLAYER"):
                 case("3"):
                     //Load Save Logic
                     textArea.append("\nWork in progress!");
                     break;
+                default:
+                    textArea.setText("Welcome to the fantasitcal World of Tajran!\nPlease select an action:\n1. New Game\n2. Continue\n3. Multiplayer");
             }
             break;
 
@@ -117,8 +119,89 @@ public class MainMenu {
                     default:
                         session.map.printMap();
                 }
+
+                if(text.toUpperCase().contains("INVENTORY")){
+                    String[] args = text.split(" ");
+                    if(args.length==1){
+                        textArea.append("\n"+session.player.inventory.toString());
+                    }
+                    else if(args.length==3){
+                        String indexString = args[2];
+                        int index;
+                        try {
+                            index = Integer.valueOf(indexString);
+                        } catch (NumberFormatException exception) {
+                            return;
+                        }
+
+                        textArea.append("\n"+session.player.inventory.useItem(index));
+                    }
+                }
                 break;
             case BATTLE:
+                Player player = session.player;
+                switch (text.toUpperCase()) {
+                    case("W"): case("A"): case("S"): case("D"):
+                        break;
+                    case ("1"):
+                    case ("ATTACK"):
+                        textArea.append("\nYou attack with all your might!");
+                        session.currentBattle.playerAttackEnemy(player.stats.getStrength());
+                        break;
+                    case ("2"):
+                    case ("BLOCK"):
+                        textArea.append("\nYou put up your guard! +20 Mana!");
+                        session.player.isBlocking=true;
+                        session.currentBattle.enemyTurn();
+                        break;
+                    case ("3"):
+                    case ("SPELL"):
+                        if(player.stats.getMana()>=20) {
+                            textArea.append("\nYou cast a mighty spell! -20 Mana!");
+                            session.currentBattle.playerAttackEnemy(player.stats.getStrength() + 10);
+                            session.player.stats.setMana(session.player.stats.getMana()-20);
+                        }
+                        else {
+                            textArea.append("\nGame: You do not have enough mana for a spell");
+                        }
+                        break;
+                    case ("STATS"):
+                        textArea.append("\n"+session.player.showStats());
+                        break;
+                    case ("STATS ENEMY"):
+                        textArea.append("\n"+session.currentBattle.enemy.showStats());
+                        break;
+                    default:
+                        textArea.append("\nGame: Here is what your curent actions are!\n" +
+                                "1. Attack: Attack the enemy normally\n" +
+                                "2. Block: Makes you take half damage next turn and restores mana!!\n" +
+                                "3. Spell: Uses mana for a powerful spell!\n" +
+                                "4. Inventory: Shows your current items!\n"+
+                                "5. Inventory use (number) -> Uses the item in that current inventory slot!\n"+
+                                "Additional Commands: Stats, Stats Enemy");
+
+                        break;
+                }
+
+                if(text.toUpperCase().contains("INVENTORY")){
+                    String[] args = text.split(" ");
+                    if(args.length==1){
+                        textArea.append("\n"+session.player.inventory.toString());
+                    }
+                    else if(args.length==3){
+                        String indexString = args[2];
+                        int index;
+                        try {
+                            index = Integer.valueOf(indexString);
+                        } catch (NumberFormatException exception) {
+                            return;
+                        }
+
+                        textArea.append("\n"+session.player.inventory.useItem(index));
+                        session.currentBattle.enemyTurn();
+                    }
+                }
+
                 break;
         }
 
@@ -127,9 +210,18 @@ public class MainMenu {
         textField.setText("");
     }
 
+
+    public void startBattle(){
+        session.gameState = GameState.BATTLE;
+        session.currentBattle = new Battle();
+        processText("");
+    }
+
+
     public void startDialog(DialogEntities.DialogEntity dialog){
         session.gameState = GameState.DIALOG;
         session.currentDialog = dialog;
+        session.currentDialog.currentIndex=0;
         processText("");
     }
 
@@ -138,6 +230,13 @@ public class MainMenu {
             instance = new MainMenu(GameSession.getInstance());
         }
         return instance;
+    }
+
+    public void gameOver(){
+        session.gameState = GameState.MAIN_MENU;
+        panel.removeAll();
+        panel.setBackground(Color.black);
+        processText("");
     }
 
 }

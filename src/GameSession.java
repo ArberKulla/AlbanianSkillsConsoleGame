@@ -12,6 +12,7 @@ public class GameSession {
     Player player;
     GameState gameState;
     GameMap map;
+    Battle currentBattle;
 
 
     private GameSession(){

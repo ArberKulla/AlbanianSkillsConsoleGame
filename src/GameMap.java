@@ -2,6 +2,7 @@ import utils.GameLevel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class GameMap {
     GameLevel currentLevel;
@@ -49,11 +50,33 @@ public class GameMap {
             menu.textArea.append("\nYou hit a wall!");
             return;
         }
+        else if(nextTile=='\u2728'){
+            foundTressure();
+        }
+        else if(nextTile=='\u263A'){
+            foundNPC();
+        }
+        else{
+            randomEncounter();
+        }
+        session.player.steps++;
+
+
         player.x = newX;
         player.y = newY;
         currentLevel.updateMap(x, y, newX, newY);
         printMap();
     }
+
+    public void randomEncounter(){
+        int steps = session.player.steps;
+        double encounterChance = 1.0+0.01*steps;
+        if(encounterChance>=Math.random()*2+1){
+            session.player.steps=0;
+            menu.startBattle();
+        }
+    }
+
 
     public void changeLevel(char key){
         currentLevel.grid[session.player.x][session.player.y]=' ';
@@ -110,5 +133,20 @@ public class GameMap {
 
         printMap();
         menu.textArea.append("\n"+newLevel.flavor);
+    }
+
+    public void foundTressure(){
+        Random random = new Random();
+        int randomIndex = random.nextInt(ItemEntities.itemList.length);
+        ItemEntities.Item randomItem = ItemEntities.itemList[randomIndex];
+        menu.textArea.append("\nGame: You found x"+randomItem.amount+" "+randomItem.name);
+        session.player.inventory.addItem(randomItem);
+    }
+
+    public void foundNPC(){
+        Random random = new Random();
+        int randomIndex = random.nextInt(DialogEntities.randomDialog.length);
+        DialogEntities.DialogEntity randomDialog = DialogEntities.randomDialog[randomIndex];
+        menu.startDialog(randomDialog);
     }
 }

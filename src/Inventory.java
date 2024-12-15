@@ -14,7 +14,8 @@ public class Inventory {
     }
 
     public String useItem(int index){
-        if(index>=items.size()){
+        index=index-1;
+        if(index>=items.size() || index<0){
             return "No such item exists!";
         }
 
@@ -40,5 +41,18 @@ public class Inventory {
             }
         }
         items.add(newItem);
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("Current Inventory:\n");
+        for(int i=0;i<items.size();i++){
+            builder.append(items.get(i).toString());
+            if(i!=items.size()-1) {
+                builder.append(", ");
+            }
+        }
+        return builder.toString();
     }
 }
