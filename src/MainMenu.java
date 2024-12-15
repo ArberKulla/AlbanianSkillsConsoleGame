@@ -77,7 +77,7 @@ public class MainMenu {
                     case ("MULTIPLAYER"):
                     case ("3"):
                         //Load Save Logic
-                        textArea.append("\nWork in progress!");
+                        textArea.append("\nYou must buy the DLC to access this mode!");
                         break;
                     default:
                         textArea.setText("Welcome to the fantasitcal World of Tajran!\nPlease select an action:\n1. New Game\n2. Continue\n3. Multiplayer");
@@ -147,6 +147,7 @@ public class MainMenu {
                 break;
             case BATTLE:
                 Player player = session.player;
+                player.isBlocking=false;
                 switch (text.toUpperCase()) {
                     case ("W"):
                     case ("A"):
