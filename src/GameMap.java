@@ -2,16 +2,24 @@ import utils.GameLevel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GameMap {
+    ArrayList<GameLevel> levels = new ArrayList<>();
     GameLevel currentLevel;
     GameSession session = GameSession.getInstance();
     MainMenu menu = MainMenu.getInstance();
 
     public GameMap(){
-        currentLevel = new GameLevel();
+        levels.add(new GameLevel(levels.size()));
+        currentLevel = levels.get(0);
     }
+
+    public GameLevel getLevel(int id){
+        return levels.get(id);
+    }
+
 
     public void enterMap(){
         menu.textArea.append("\n"+currentLevel.flavor);
@@ -80,50 +88,55 @@ public class GameMap {
 
     public void changeLevel(char key){
         currentLevel.grid[session.player.x][session.player.y]=' ';
-        GameLevel newLevel = new GameLevel();
+        GameLevel newLevel = new GameLevel(levels.size());
         switch (key) {
             case 'W':
-                if (currentLevel.upLevel != null) {
-                    currentLevel = currentLevel.upLevel;
+                if (currentLevel.upLevel !=-1) {
+                    currentLevel = getLevel(currentLevel.upLevel);
                 } else {
-                    currentLevel.upLevel = newLevel;
-                    newLevel.downLevel = currentLevel;
+                    levels.add(newLevel);
+                    System.out.print(newLevel.id);
+                    currentLevel.upLevel = newLevel.id;
+                    newLevel.downLevel = currentLevel.id;
                     currentLevel = newLevel;
                 }
                 session.player.x = currentLevel.grid.length-1;
                 session.player.y = currentLevel.grid.length/2;
                 break;
             case 'A':
-                if(currentLevel.leftLevel!=null){
-                    currentLevel = currentLevel.leftLevel;
+                if(currentLevel.leftLevel!=-1){
+                    currentLevel = getLevel(currentLevel.leftLevel);
                 }
                 else {
-                currentLevel.leftLevel = newLevel;
-                newLevel.rightLevel = currentLevel;
+                    levels.add(newLevel);
+                    currentLevel.leftLevel = newLevel.id;
+                newLevel.rightLevel = currentLevel.id;
                 currentLevel = newLevel;
                 }
                 session.player.x = currentLevel.grid.length/2;
                 session.player.y = currentLevel.grid.length-1;
                 break;
             case 'S':
-                if(currentLevel.downLevel!=null){
-                    currentLevel = currentLevel.downLevel;
+                if(currentLevel.downLevel!=-1){
+                    currentLevel = getLevel(currentLevel.downLevel);
                 }
                 else {
-                    currentLevel.downLevel = newLevel;
-                    newLevel.upLevel = currentLevel;
+                    levels.add(newLevel);
+                    currentLevel.downLevel = newLevel.id;
+                    newLevel.upLevel = currentLevel.id;
                     currentLevel = newLevel;
                 }
                 session.player.x = 0;
                 session.player.y = currentLevel.grid.length/2;
                 break;
             case 'D':
-                if(currentLevel.rightLevel!=null){
-                    currentLevel = currentLevel.rightLevel;
+                if(currentLevel.rightLevel!=-1){
+                    currentLevel = getLevel(currentLevel.rightLevel);
                 }
                 else {
-                    currentLevel.rightLevel = newLevel;
-                    newLevel.leftLevel = currentLevel;
+                    levels.add(newLevel);
+                    currentLevel.rightLevel = newLevel.id;
+                    newLevel.leftLevel = currentLevel.id;
                     currentLevel = newLevel;
                 }
                 session.player.x = currentLevel.grid.length/2;

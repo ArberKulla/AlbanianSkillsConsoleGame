@@ -8,16 +8,17 @@ import java.util.Random;
 public class GameLevel {
     Location[] locations = {new Location("You have entered the Forest; it seems rather calm!", Color.GREEN), new Location("You have entered the Cave; the darkness feels oppressive.", Color.DARK_GRAY), new Location("You have entered the Desert; the heat is almost unbearable.", Color.YELLOW), new Location("You have entered the Mountain; the air is thin and crisp.", Color.CYAN), new Location("You have entered the Swamp; the smell is nauseating and the ground squelches beneath your feet.", new Color(1, 50, 32)), new Location("You have entered the Ruins; ancient walls whisper tales of a forgotten past.", Color.GRAY), new Location("You have entered the Volcano; molten lava bubbles menacingly around you.", Color.RED), new Location("You have entered the Tavern; the smell of ale and laughter fills the air.", Color.ORANGE), new Location("You have entered the Enchanted Grove; the trees seem to hum with a magical melody.", new Color(128, 0, 128)), new Location("You have entered the Frozen Wastes; icy winds bite at your skin.", Color.WHITE)};
 
-
+    public int id;
     public String flavor;
     public char[][] grid;
     public Color color;
-    public GameLevel upLevel;
-    public GameLevel downLevel;
-    public GameLevel leftLevel;
-    public GameLevel rightLevel;
+    public int upLevel=-1;
+    public int downLevel=-1;
+    public int leftLevel=-1;
+    public int rightLevel=-1;
 
-    public GameLevel(){
+    public GameLevel(int id){
+        this.id=id;
         generateMap();
     }
 

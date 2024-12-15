@@ -4,7 +4,7 @@ import interfaces.BattleEntity;
 import utils.Stats;
 
 public class Player {
-    String name= "Red";
+    String name;
     GameClass gameClass;
     Stats stats;
     Inventory inventory;

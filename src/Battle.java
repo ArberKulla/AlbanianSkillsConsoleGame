@@ -4,7 +4,6 @@ import utils.Stats;
 public class Battle {
     boolean isFinished = false;
     Enemy enemy;
-    Player player;
     MainMenu menu = MainMenu.getInstance();
     GameSession session = GameSession.getInstance();
 

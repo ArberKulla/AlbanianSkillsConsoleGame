@@ -1,8 +1,7 @@
 import enums.GameState;
+import utils.GameLevel;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class GameSession {
     private static GameSession instance;
@@ -25,6 +24,19 @@ public class GameSession {
         if (instance == null) {
             instance = new GameSession();
         }
+        return instance;
+    }
+
+    public GameSession loadFromSave(String name, Player player, GameState gameState, GameLevel currentLevel, ArrayList<GameLevel> levels) {
+        if (instance == null) {
+            instance = new GameSession();
+        }
+        this.map = new GameMap();
+        map.currentLevel = currentLevel;
+        map.levels = levels;
+        this.name = name;
+        this.player = player;
+        this.gameState = gameState;
         return instance;
     }
 

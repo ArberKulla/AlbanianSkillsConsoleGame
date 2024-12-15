@@ -69,7 +69,12 @@ public class MainMenu {
                 case("CONTINUE"):
                 case("2"):
                     //Load Save Logic
-                    textArea.append("Last time, on Battlemons!");
+                    textArea.setText("Last time, on Battlemons!");
+                    SaveManger saveManger = new SaveManger();
+                    GameSession session2= saveManger.loadGame();
+                    if(session2!=null){
+                        processText("");
+                    }
                     break;
                 case("MULTIPLAYER"):
                 case("3"):
@@ -115,6 +120,11 @@ public class MainMenu {
                         break;
                     case ("STATS"):
                         textArea.append("\n"+session.player.showStats());
+                        break;
+                    case ("SAVE"):
+                        SaveManger saveManger = new SaveManger();
+                        saveManger.saveGame();
+                        textArea.append("\nGame: Game successfully saved!");
                         break;
                     default:
                         session.map.printMap();
