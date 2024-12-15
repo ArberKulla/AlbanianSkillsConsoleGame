@@ -9,10 +9,6 @@ public class Stats {
     private int defense;
     private int speed;
 
-    public int getNeededExp() {
-        return neededExp;
-    }
-
     public void setNeededExp(int neededExp) {
         this.neededExp = neededExp;
     }
@@ -30,24 +26,19 @@ public class Stats {
         this.strength = strength;
         this.defense = defense;
         this.speed = speed;
-        this.neededExp =100;
+        this.neededExp = 100;
         this.exp = 0;
-        this.level =1;
+        this.level = 1;
     }
 
-    public int[] getStats(){
-        return new int[] {hp, mana, strength, defense, speed};
-    }
-
-    public boolean addExp(int added){
-        if(exp+added>=neededExp){
+    public boolean addExp(int added) {
+        if (exp + added >= neededExp) {
             level++;
-            exp=exp+added-neededExp;
-            neededExp+=20;
+            exp = exp + added - neededExp;
+            neededExp += 20;
             return true;
-        }
-        else{
-            exp+=added;
+        } else {
+            exp += added;
             return false;
         }
     }
@@ -69,34 +60,24 @@ public class Stats {
     }
 
     public void addHealth(int points) {
-    if(hp+points>maxHp){
-        hp = maxHp;
-    }
-    else{
-        hp+=points;
-    }
+        if (hp + points > maxHp) {
+            hp = maxHp;
+        } else {
+            hp += points;
+        }
     }
 
     public void addMana(int points) {
-        if(mana+points>maxMana){
+        if (mana + points > maxMana) {
             mana = maxMana;
-        }
-        else{
-            mana+=points;
+        } else {
+            mana += points;
         }
     }
 
-    public void changeAll(int[] stats){
-        this.hp = stats[0];
-        this.mana = stats[1];
-        this.strength = stats[2];
-        this.defense = stats[3];
-        this.speed = stats[4];
-    }
-
-    public void addToAll(int[] stats){
-        this.maxHp +=stats[0];
-        this.hp +=stats[0];
+    public void addToAll(int[] stats) {
+        this.maxHp += stats[0];
+        this.hp += stats[0];
         this.maxMana += stats[1];
         this.mana += stats[1];
         this.strength += stats[2];
@@ -114,20 +95,8 @@ public class Stats {
         this.maxHp = maxHp;
     }
 
-    public int getMaxMana() {
-        return maxMana;
-    }
-
-    public void setMaxMana(int maxMana) {
-        this.maxMana = maxMana;
-    }
-
     public int getHp() {
         return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
     }
 
     public int getMana() {
@@ -150,24 +119,16 @@ public class Stats {
         return defense;
     }
 
-    public void setDefense(int defense) {
-        this.defense = defense;
-    }
-
     public int getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
     }
 
     @Override
     public String toString() {
         return "\n" +
-                "Level: "+level+"   EXP: "+exp+"/"+neededExp+"\n"+
-                "HP= "+maxHp+"/"+ hp +
-                ", Mana=" + maxMana+"/"+mana +
+                "Level: " + level + "   EXP: " + exp + "/" + neededExp + "\n" +
+                "HP= " + hp + "/" + maxHp +
+                ", Mana=" + mana + "/" + maxMana +
                 ", Strength=" + strength +
                 ", Defense=" + defense +
                 ", Speed=" + speed;

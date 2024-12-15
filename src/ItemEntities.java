@@ -1,23 +1,19 @@
-import enums.GameClass;
 import enums.ItemType;
-import enums.PromptType;
 import interfaces.InventoryAction;
-import levels.Prompt;
 
 public class ItemEntities {
-    static MainMenu menu = MainMenu.getInstance();
     static GameSession session = GameSession.getInstance();
 
     public static Item[] itemList = {
-             new Item(
-                "Health Potion S",
-                1,
-                ItemType.CONSUMABLE,
-                "You recovered 20 Health!",
-                () -> {
-                session.player.stats.addHealth(20);
-                }
-                ),
+            new Item(
+                    "Health Potion S",
+                    1,
+                    ItemType.CONSUMABLE,
+                    "You recovered 20 Health!",
+                    () -> {
+                        session.player.stats.addHealth(20);
+                    }
+            ),
             new Item(
                     "Health Potion S",
                     2,
@@ -123,19 +119,19 @@ public class ItemEntities {
                     ItemType.CONSUMABLE,
                     "You are now less likely to find monsters!",
                     () -> {
-                        session.player.steps=-50;
+                        session.player.steps = -50;
                     }
             ),
-};
+    };
 
     public static class Item {
         String name;
         ItemType type;
-        int amount=0;
+        int amount;
         InventoryAction action;
         String description;
 
-        public Item(String name,int amount, ItemType type, String description, InventoryAction action) {
+        public Item(String name, int amount, ItemType type, String description, InventoryAction action) {
             this.name = name;
             this.amount = amount;
             this.description = description;
@@ -143,20 +139,20 @@ public class ItemEntities {
             this.action = action;
         }
 
-        public Item(String name,int amount, ItemType type) {
+        public Item(String name, int amount, ItemType type) {
             this.name = name;
             this.amount = amount;
             this.type = type;
         }
 
-        public void use(){
+        public void use() {
             amount--;
             action.execute();
         }
 
         @Override
-        public String toString(){
-            return name+" x"+amount;
+        public String toString() {
+            return name + " x" + amount;
         }
     }
 }

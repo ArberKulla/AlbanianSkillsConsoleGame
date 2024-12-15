@@ -12,18 +12,18 @@ public class GameLevel {
     public String flavor;
     public char[][] grid;
     public Color color;
-    public int upLevel=-1;
-    public int downLevel=-1;
-    public int leftLevel=-1;
-    public int rightLevel=-1;
+    public int upLevel = -1;
+    public int downLevel = -1;
+    public int leftLevel = -1;
+    public int rightLevel = -1;
 
-    public GameLevel(int id){
-        this.id=id;
+    public GameLevel(int id) {
+        this.id = id;
         generateMap();
     }
 
 
-    public void generateMap(){
+    public void generateMap() {
         Random rand = new Random();
         int locationRNG = rand.nextInt(locations.length);
         flavor = locations[locationRNG].getDescription();
@@ -40,16 +40,16 @@ public class GameLevel {
             }
         }
 
-        for(int i=0;i<size/3;i++){
+        for (int i = 0; i < size / 3; i++) {
             grid[0][i] = '=';
-            grid[0][size-i-1] = '=';
-            grid[size-1][i] = '=';
-            grid[size-1][size-i-1] = '=';
-            if(i>0){
+            grid[0][size - i - 1] = '=';
+            grid[size - 1][i] = '=';
+            grid[size - 1][size - i - 1] = '=';
+            if (i > 0) {
                 grid[i][0] = '=';
-                grid[i][size-1] = '=';
-                grid[size-i-1][0] = '=';
-                grid[size-i-1][size-1] = '=';
+                grid[i][size - 1] = '=';
+                grid[size - i - 1][0] = '=';
+                grid[size - i - 1][size - 1] = '=';
             }
         }
 
@@ -67,7 +67,7 @@ public class GameLevel {
             // Ensure the position is not repeated
             if (!pickedPositions.contains(position)) {
                 pickedPositions.add(position);
-                grid[x][y] = '\u2728';
+                grid[x][y] = '✨';
                 tressureAmmount--;
             }
         }
@@ -84,22 +84,21 @@ public class GameLevel {
             // Ensure the position is not repeated
             if (!pickedPositions.contains(position)) {
                 pickedPositions.add(position);
-                grid[x][y] = '\u263A';
+                grid[x][y] = '☺';
                 npcAmmount--;
             }
         }
 
     }
 
-    public void placePlayer(int new_x, int new_y){
-        grid[new_x][new_y]='★';
+    public void placePlayer(int new_x, int new_y) {
+        grid[new_x][new_y] = '★';
     }
 
-    public char updateMap(int old_x,int old_y, int new_x, int new_y){
+    public void updateMap(int old_x, int old_y, int new_x, int new_y) {
         char oldChar = grid[new_x][new_y];
-        grid[old_x][old_y]=' ';
-        grid[new_x][new_y]='★';
-        return oldChar;
+        grid[old_x][old_y] = ' ';
+        grid[new_x][new_y] = '★';
     }
 
 }

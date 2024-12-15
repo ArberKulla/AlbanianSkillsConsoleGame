@@ -1,10 +1,10 @@
 package utils;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class Location {
-    private String description;
-    private Color color;
+    private final String description;
+    private final Color color;
 
     public Location(String description, Color color) {
         this.description = description;

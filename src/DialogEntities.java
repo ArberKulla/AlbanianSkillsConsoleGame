@@ -5,8 +5,8 @@ import interfaces.GameStateAction;
 import levels.Prompt;
 
 public class DialogEntities {
-     static MainMenu menu = MainMenu.getInstance();
-     static GameSession session = GameSession.getInstance();
+    static MainMenu menu = MainMenu.getInstance();
+    static GameSession session = GameSession.getInstance();
 
     public static DialogEntity[] randomDialog = {
             new DialogEntity(
@@ -16,14 +16,14 @@ public class DialogEntities {
                                     "Hello traveler, do you want me to upgrade you wears?\nY/N",
                                     PromptType.REACTION,
                                     (text) -> {
-                                        switch (text.toUpperCase()){
-                                            case("Y"):
-                                            case("YES"):
+                                        switch (text.toUpperCase()) {
+                                            case ("Y"):
+                                            case ("YES"):
                                                 menu.textArea.append("\nBlacksmith: Excellent! Your wears are now stronger!\n+5 to Strength!");
-                                                session.player.stats.setStrength(session.player.stats.getStrength()+5);
+                                                session.player.stats.setStrength(session.player.stats.getStrength() + 5);
                                                 break;
-                                            case("N"):
-                                            case("NO"):
+                                            case ("N"):
+                                            case ("NO"):
                                                 menu.textArea.append("\nBlacksmith: Suit yourself traveler....");
                                                 break;
                                             default:
@@ -33,7 +33,7 @@ public class DialogEntities {
 
                             ),
                     },
-                    ()->{
+                    () -> {
                         goToWorld();
                     }
             ),
@@ -44,15 +44,15 @@ public class DialogEntities {
                                     "Hello traveler, care for a checkup?\nY/N",
                                     PromptType.REACTION,
                                     (text) -> {
-                                        switch (text.toUpperCase()){
-                                            case("Y"):
-                                            case("YES"):
+                                        switch (text.toUpperCase()) {
+                                            case ("Y"):
+                                            case ("YES"):
                                                 menu.textArea.append("\nMedic: There, this medicine should get you up to speed!\n+10 to Max Health!");
-                                                session.player.stats.setMaxHp(session.player.stats.getMaxHp()+10);
+                                                session.player.stats.setMaxHp(session.player.stats.getMaxHp() + 10);
                                                 session.player.stats.addHealth(10);
                                                 break;
-                                            case("N"):
-                                            case("NO"):
+                                            case ("N"):
+                                            case ("NO"):
                                                 menu.textArea.append("\nMedic: You're not an apple are you?");
                                                 break;
                                             default:
@@ -62,7 +62,7 @@ public class DialogEntities {
 
                             ),
                     },
-                    ()->{
+                    () -> {
                         goToWorld();
                     }
             ),
@@ -73,14 +73,14 @@ public class DialogEntities {
                                     "I can tell you about this land, would you like to hear?\nY/N",
                                     PromptType.REACTION,
                                     (text) -> {
-                                        switch (text.toUpperCase()){
-                                            case("Y"):
-                                            case("YES"):
+                                        switch (text.toUpperCase()) {
+                                            case ("Y"):
+                                            case ("YES"):
                                                 break;
-                                            case("N"):
-                                            case("NO"):
+                                            case ("N"):
+                                            case ("NO"):
                                                 menu.textArea.append("\nHistorian: Your loss kid!");
-                                                session.currentDialog.currentIndex=-1;
+                                                session.currentDialog.currentIndex = -1;
                                                 break;
                                             default:
                                                 session.currentDialog.currentIndex--;
@@ -109,7 +109,7 @@ public class DialogEntities {
                                     PromptType.SKIPPABLE
                             )
                     },
-                    ()->{
+                    () -> {
                         goToWorld();
                     }
             )
@@ -120,28 +120,28 @@ public class DialogEntities {
     public static DialogEntity GAME_START = new DialogEntity(
             "Game",
             new Prompt[]{
-            new Prompt(
-                    "...",
-                    PromptType.SKIPPABLE
-            ),
-            new Prompt(
-                    "You wake up in your bed...",
-                    PromptType.SKIPPABLE
-            ),
-            new Prompt(
-                    "You get out of the house....",
-                    PromptType.SKIPPABLE
-            ),
-            new Prompt(
-                    "Its time to explore!",
-                    PromptType.SKIPPABLE
-            ),
-    },
-            ()->{
+                    new Prompt(
+                            "...",
+                            PromptType.SKIPPABLE
+                    ),
+                    new Prompt(
+                            "You wake up in your bed...",
+                            PromptType.SKIPPABLE
+                    ),
+                    new Prompt(
+                            "You get out of the house....",
+                            PromptType.SKIPPABLE
+                    ),
+                    new Prompt(
+                            "Its time to explore!",
+                            PromptType.SKIPPABLE
+                    ),
+            },
+            () -> {
                 session.map = new GameMap();
-                session.player.x= session.map.currentLevel.grid.length/2;
-                session.player.y= session.map.currentLevel.grid.length/2;
-                session.gameState= GameState.OPEN_WORLD;
+                session.player.x = session.map.currentLevel.grid.length / 2;
+                session.player.y = session.map.currentLevel.grid.length / 2;
+                session.gameState = GameState.OPEN_WORLD;
                 menu.processText("");
                 session.map.enterMap();
             }
@@ -155,28 +155,28 @@ public class DialogEntities {
                             "You Lost!",
                             PromptType.SKIPPABLE
                     )},
-                    ()->{
-                        menu.gameOver();
-                    }
+            () -> {
+                menu.gameOver();
+            }
     );
 
     // NEW GAME
     public static DialogEntity NEW_GAME = new DialogEntity(
             "Nugua"
-            ,new Prompt[]{
+            , new Prompt[]{
             new Prompt(
                     "My child, what shall be your name?",
                     PromptType.REACTION,
                     (text) -> {
-                        session.player.name=text;
-                        menu.textArea.append("\nNagua: "+session.player.name+"... a wonderful name.... ");
+                        session.player.name = text;
+                        menu.textArea.append("\nNagua: " + session.player.name + "... a wonderful name.... ");
                     }
             ),
             new Prompt(
                     "What path will you choose my child?\n1. Warrior\n2. Mage\n3. Range",
                     PromptType.REACTION,
                     (text) -> {
-                        switch(text.toUpperCase()){
+                        switch (text.toUpperCase()) {
                             case ("WARRIOR"):
                             case ("1"):
                                 session.player.setGameClass(GameClass.WARRIOR);
@@ -199,17 +199,16 @@ public class DialogEntities {
                     PromptType.SKIPPABLE
             ),
     },
-            ()->{
-        menu.startDialog(GAME_START);
+            () -> {
+                menu.startDialog(GAME_START);
             }
     );
-
 
 
     // Inner class representing more complex dialog objects
     public static class DialogEntity {
         String name;
-        int currentIndex=0;
+        int currentIndex = 0;
         Prompt[] prompts;
         GameStateAction action;
 
@@ -219,47 +218,42 @@ public class DialogEntities {
             this.action = action;
         }
 
-        public DialogEntity(String name, Prompt[] prompts) {
-            this.name = name;
-            this.prompts = prompts;
-        }
-
-        public void next(String text){
-            if(currentIndex>0) {
-                if (prompts[currentIndex-1].type == PromptType.REACTION) {
-                    prompts[currentIndex-1].action.execute(text);
+        public void next(String text) {
+            if (currentIndex > 0) {
+                if (prompts[currentIndex - 1].type == PromptType.REACTION) {
+                    prompts[currentIndex - 1].action.execute(text);
                 }
             }
 
-            if(currentIndex==-1){
+            if (currentIndex == -1) {
                 finished();
                 goToWorld();
                 return;
             }
 
-                if(currentIndex<prompts.length) {
-                    menu.textArea.append("\n"+name +": "+ prompts[currentIndex].text);
-                }
+            if (currentIndex < prompts.length) {
+                menu.textArea.append("\n" + name + ": " + prompts[currentIndex].text);
+            }
 
-                if(currentIndex>=prompts.length) {
-                    finished();
-                }
+            if (currentIndex >= prompts.length) {
+                finished();
+            }
 
-                currentIndex++;
+            currentIndex++;
         }
 
-        public void finished(){
-            if(action!=null){
-            action.execute();
+        public void finished() {
+            if (action != null) {
+                action.execute();
             }
         }
 
 
     }
 
-    public static void goToWorld(){
-        session.gameState= GameState.OPEN_WORLD;
-        session.currentDialog.currentIndex=0;
+    public static void goToWorld() {
+        session.gameState = GameState.OPEN_WORLD;
+        session.currentDialog.currentIndex = 0;
         menu.processText("");
     }
 }

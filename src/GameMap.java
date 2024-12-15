@@ -11,18 +11,18 @@ public class GameMap {
     GameSession session = GameSession.getInstance();
     MainMenu menu = MainMenu.getInstance();
 
-    public GameMap(){
+    public GameMap() {
         levels.add(new GameLevel(levels.size()));
         currentLevel = levels.get(0);
     }
 
-    public GameLevel getLevel(int id){
+    public GameLevel getLevel(int id) {
         return levels.get(id);
     }
 
 
-    public void enterMap(){
-        menu.textArea.append("\n"+currentLevel.flavor);
+    public void enterMap() {
+        menu.textArea.append("\n" + currentLevel.flavor);
     }
 
     public void printMap() {
@@ -43,28 +43,34 @@ public class GameMap {
         menu.frame.repaint();
     }
 
-    public void movePlayer(int newX, int newY){
+    public void movePlayer(int newX, int newY) {
         Player player = session.player;
         int x = player.x;
         int y = player.y;
-        if(newX<0){changeLevel('W'); return;}
-        else if(newX==currentLevel.grid.length){changeLevel('S'); return;}
-        else if (newY<0){changeLevel('A'); return;}
-        else if(newY==currentLevel.grid.length){changeLevel('D'); return;}
+        if (newX < 0) {
+            changeLevel('W');
+            return;
+        } else if (newX == currentLevel.grid.length) {
+            changeLevel('S');
+            return;
+        } else if (newY < 0) {
+            changeLevel('A');
+            return;
+        } else if (newY == currentLevel.grid.length) {
+            changeLevel('D');
+            return;
+        }
 
 
         char nextTile = currentLevel.grid[newX][newY];
-        if(nextTile=='=') {
+        if (nextTile == '=') {
             menu.textArea.append("\nYou hit a wall!");
             return;
-        }
-        else if(nextTile=='\u2728'){
+        } else if (nextTile == '✨') {
             foundTressure();
-        }
-        else if(nextTile=='\u263A'){
+        } else if (nextTile == '☺') {
             foundNPC();
-        }
-        else{
+        } else {
             randomEncounter();
         }
         session.player.steps++;
@@ -76,87 +82,83 @@ public class GameMap {
         printMap();
     }
 
-    public void randomEncounter(){
+    public void randomEncounter() {
         int steps = session.player.steps;
-        double encounterChance = 1.0+0.01*steps;
-        if(encounterChance>=Math.random()*2+1){
-            session.player.steps=0;
+        double encounterChance = 1.0 + 0.01 * steps;
+        if (encounterChance >= Math.random() * 2 + 1) {
+            session.player.steps = 0;
             menu.startBattle();
         }
     }
 
 
-    public void changeLevel(char key){
-        currentLevel.grid[session.player.x][session.player.y]=' ';
+    public void changeLevel(char key) {
+        currentLevel.grid[session.player.x][session.player.y] = ' ';
         GameLevel newLevel = new GameLevel(levels.size());
         switch (key) {
             case 'W':
-                if (currentLevel.upLevel !=-1) {
+                if (currentLevel.upLevel != -1) {
                     currentLevel = getLevel(currentLevel.upLevel);
                 } else {
                     levels.add(newLevel);
-                    System.out.print(newLevel.id);
                     currentLevel.upLevel = newLevel.id;
                     newLevel.downLevel = currentLevel.id;
                     currentLevel = newLevel;
                 }
-                session.player.x = currentLevel.grid.length-1;
-                session.player.y = currentLevel.grid.length/2;
+                session.player.x = currentLevel.grid.length - 1;
+                session.player.y = currentLevel.grid.length / 2;
                 break;
             case 'A':
-                if(currentLevel.leftLevel!=-1){
+                if (currentLevel.leftLevel != -1) {
                     currentLevel = getLevel(currentLevel.leftLevel);
-                }
-                else {
+                } else {
                     levels.add(newLevel);
                     currentLevel.leftLevel = newLevel.id;
-                newLevel.rightLevel = currentLevel.id;
-                currentLevel = newLevel;
+                    newLevel.rightLevel = currentLevel.id;
+                    currentLevel = newLevel;
                 }
-                session.player.x = currentLevel.grid.length/2;
-                session.player.y = currentLevel.grid.length-1;
+                session.player.x = currentLevel.grid.length / 2;
+                session.player.y = currentLevel.grid.length - 1;
                 break;
             case 'S':
-                if(currentLevel.downLevel!=-1){
+                if (currentLevel.downLevel != -1) {
                     currentLevel = getLevel(currentLevel.downLevel);
-                }
-                else {
+                } else {
                     levels.add(newLevel);
                     currentLevel.downLevel = newLevel.id;
                     newLevel.upLevel = currentLevel.id;
                     currentLevel = newLevel;
                 }
                 session.player.x = 0;
-                session.player.y = currentLevel.grid.length/2;
+                session.player.y = currentLevel.grid.length / 2;
                 break;
             case 'D':
-                if(currentLevel.rightLevel!=-1){
+                if (currentLevel.rightLevel != -1) {
                     currentLevel = getLevel(currentLevel.rightLevel);
-                }
-                else {
+                } else {
                     levels.add(newLevel);
                     currentLevel.rightLevel = newLevel.id;
                     newLevel.leftLevel = currentLevel.id;
                     currentLevel = newLevel;
                 }
-                session.player.x = currentLevel.grid.length/2;
+                session.player.x = currentLevel.grid.length / 2;
                 session.player.y = 0;
                 break;
         }
 
         printMap();
-        menu.textArea.append("\n"+newLevel.flavor);
+        menu.textArea.append("\n" + newLevel.flavor);
     }
 
-    public void foundTressure(){
+    public void foundTressure() {
         Random random = new Random();
         int randomIndex = random.nextInt(ItemEntities.itemList.length);
         ItemEntities.Item randomItem = ItemEntities.itemList[randomIndex];
-        menu.textArea.append("\nGame: You found x"+randomItem.amount+" "+randomItem.name);
+        menu.textArea.append("\nGame: You found x" + randomItem.amount + " " + randomItem.name);
         session.player.inventory.addItem(randomItem);
     }
 
-    public void foundNPC(){
+    public void foundNPC() {
         Random random = new Random();
         int randomIndex = random.nextInt(DialogEntities.randomDialog.length);
         DialogEntities.DialogEntity randomDialog = DialogEntities.randomDialog[randomIndex];

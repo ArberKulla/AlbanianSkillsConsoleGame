@@ -14,9 +14,9 @@ public class GameSession {
     Battle currentBattle;
 
 
-    private GameSession(){
+    private GameSession() {
         this.player = new Player();
-        this.name="Game: ";
+        this.name = "Game: ";
         this.gameState = GameState.MAIN_MENU;
     }
 
@@ -27,7 +27,7 @@ public class GameSession {
         return instance;
     }
 
-    public GameSession loadFromSave(String name, Player player, GameState gameState, GameLevel currentLevel, ArrayList<GameLevel> levels) {
+    public void loadFromSave(String name, Player player, GameState gameState, GameLevel currentLevel, ArrayList<GameLevel> levels) {
         if (instance == null) {
             instance = new GameSession();
         }
@@ -37,7 +37,6 @@ public class GameSession {
         this.name = name;
         this.player = player;
         this.gameState = gameState;
-        return instance;
     }
 
 

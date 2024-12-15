@@ -1,5 +1,5 @@
 package enums;
 
 public enum ItemType {
-    CONSUMABLE,KEY
+    CONSUMABLE, KEY
 }

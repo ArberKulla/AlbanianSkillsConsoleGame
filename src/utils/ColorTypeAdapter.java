@@ -1,7 +1,8 @@
 package utils;
 
 import com.google.gson.*;
-import java.awt.Color;
+
+import java.awt.*;
 import java.lang.reflect.Type;
 
 public class ColorTypeAdapter implements JsonSerializer<Color>, JsonDeserializer<Color> {
